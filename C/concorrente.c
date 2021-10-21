@@ -117,7 +117,7 @@ int main(){
     for (i = 0; i < iteracoes; i++){
         if (i == 0)
             ftime(&inicio_laco);
-        #pragma omp parallel num_threads(1)
+        #pragma omp parallel num_threads(4)
             {
             #pragma omp for private(k,l,cont_aux) collapse(2)
             for (k = 0; k < N; k++){
