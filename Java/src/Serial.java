@@ -1,4 +1,3 @@
-
 public class Serial {
 
     private int[][] grid;
