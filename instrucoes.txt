@@ -1,0 +1,14 @@
+1. Aloque dinamicamente a(s) matriz(es) necessária(s) (de números inteiros) para representar duas gerações do tabuleiro com tamanho N*N. Sugestão: use grid e newgrid para a geração atual e futura, respectivamente.
+2. Inicie a geração inicial do tabuleiro (array) a partir da posição (1,1) com uma figura de um Glider, conforme a figura abaixoe também com afigura de um R-pentomino (https://www.conwaylife.com/wiki/R-pentomino) a partir da linha 10 e coluna 30, da seguinte forma:
+3. Crie uma função/método que retorne a quantidade de vizinhos vivos de cada célula na posição i,j:
+
+int getNeighbors(int** grid, int i, int j) { ... }
+4. Crie um laço de repetição para executar um determinado número máximo de iterações do jogo, ou seja, determine a quantidade de gerações sucessivas do tabuleiro que devem ser geradas.
+5. Crie um procedimento (ou trecho de código) que, ao finalizar todas as iterações/gerações, some todas as posições da última geração do tabuleiro e retorne a quantidade de células vivas.
+
+
+Tamanho do tabuleiro = 2048*2048
+Quantidade de gerações = 2000
+Quantidade de threads = 1, 2, 4 e 8
+
+
