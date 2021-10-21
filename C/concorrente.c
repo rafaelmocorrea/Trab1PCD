@@ -89,7 +89,7 @@ int main(){
     int **grid;             //grid atual
     int **newgrid;          //proximo grid
     int N = 2048;           //NxN
-    int iteracoes = 200;    //Numero de iteracoes
+    int iteracoes = 2000;    //Numero de iteracoes
     int cont_aux;           //Contador auxiliar
     int tipo = HIGH;        //Tipo do jogo
     int i, j, k, l;         //Auxiliares dos lacos
@@ -148,7 +148,7 @@ int main(){
             }
         }
         copia_matriz(grid,newgrid,N);
-        if (i < 6 || i+1 == 2000)
+        if (i+1 == 2000)
             printf("\nGeracao %d: %d",i+1,somaMatriz(grid,N));
         if (i == 0)
             ftime(&fim_laco);
@@ -156,8 +156,6 @@ int main(){
 
     
     time(&fim_prog);
-    //imprime_matriz(grid, N);
-    //printf("\nSoma: %d", somaMatriz(grid,N));
     diff = (int) (1000.0 * (fim_laco.time-inicio_laco.time)+(fim_laco.millitm-inicio_laco.millitm));
     printf("\nTempo total: %.2lfs", difftime(fim_prog,inicio_prog));
     printf("\nTempo de um laco: %ums",diff);

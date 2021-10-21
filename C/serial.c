@@ -141,8 +141,6 @@ int main(){
         }
     }
 
-    //imprime_matriz(grid, N);
-    //printf("\nSoma: %d", somaMatriz(grid,N));
     free(grid);
     free(newgrid);
 
