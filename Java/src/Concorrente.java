@@ -50,23 +50,21 @@ public class Concorrente implements Runnable {
 
     public static void main(String[] args) {
 
-        int N = 2048, iteracoes = 2000, aux;
+        int N = 2048, iteracoes = 100, aux;
         int[][] grid = new int[N][N];
         int[][] newgrid = new int[N][N];
         int num_threads = 4;
         int tipo = HIGH;
-        long total_inicial, total_final, laco_inicial = 0, laco_final = 0;
+        long total_inicial, total_final, laco_inicial = 0, laco_final = 0, paralelo_inicial = 0, paralelo_final = 0, media_laco = 0;
 
         total_inicial = System.currentTimeMillis();
 
         Utilitarios.glider(grid);
         Utilitarios.pentomino(grid);
         System.out.println("Condicao inicial: "+Utilitarios.somaMatriz(grid,N));
+        paralelo_inicial = System.currentTimeMillis();
         for (int i = 0; i < iteracoes; i++){
-
-            if (i == 0)
-                laco_inicial = System.currentTimeMillis();
-
+            laco_inicial = System.currentTimeMillis();
             aux = 0;
             Concorrente[] threads = new Concorrente[num_threads];
             Thread[] arraythreads = new Thread[num_threads];
@@ -90,13 +88,16 @@ public class Concorrente implements Runnable {
             }
             Utilitarios.copiaMatriz(grid,newgrid,N);
 
+            laco_final = System.currentTimeMillis();
             if (i == 0)
-                laco_final = System.currentTimeMillis();
+                media_laco = laco_final-laco_inicial;
+            media_laco = (media_laco + (laco_final-laco_inicial))/2;
 
-            if (i+1 == 2000)
+            if (i+1 == iteracoes)
                 System.out.println("Geracao "+(i+1)+": "+Utilitarios.somaMatriz(grid,N));
         }
+        paralelo_final = System.currentTimeMillis();
         total_final = System.currentTimeMillis();
-        System.out.println("Tempo de um laco: "+(laco_final-laco_inicial)+"ms\nTempo total: "+(total_final-total_inicial)+"ms");
+        System.out.println("Media de lacos: "+media_laco+"ms\nTempo total: "+(total_final-total_inicial)+"ms\nTempo em paralelo: "+(paralelo_final-paralelo_inicial)+"ms");
     }
 }
