@@ -89,15 +89,15 @@ int main(){
     int **grid;             //grid atual
     int **newgrid;          //proximo grid
     int N = 2048;           //NxN
-    int iteracoes = 2000;    //Numero de iteracoes
+    int iteracoes = 100;    //Numero de iteracoes
     int cont_aux;           //Contador auxiliar
     int tipo = HIGH;        //Tipo do jogo
     int i, j, k, l;         //Auxiliares dos lacos
-    int diff;               //Diferenca do tempo em ms
-    time_t inicio_prog, fim_prog;
-    struct timeb fim_laco, inicio_laco;
+    long diff_laco_atual, diff_paralelo, diff_total;    //Diferenca do tempo em ms
+    long media_laco;
+    struct timeb fim_laco, inicio_laco, fim_prog, inicio_prog, fim_paralelo, inicio_paralelo;
 
-    time(&inicio_prog);
+    ftime(&inicio_prog);
 
     printf("Numero de processadores: %d\n",omp_get_num_procs());
 
@@ -114,10 +114,10 @@ int main(){
 
     printf("Condicao inicial: %d",somaMatriz(grid,N));
 
+    ftime(&inicio_paralelo);
     for (i = 0; i < iteracoes; i++){
-        if (i == 0)
-            ftime(&inicio_laco);
-        #pragma omp parallel num_threads(4)
+        ftime(&inicio_laco);
+        #pragma omp parallel num_threads(1)
             {
             #pragma omp for private(k,l,cont_aux) collapse(2)
             for (k = 0; k < N; k++){
@@ -148,17 +148,21 @@ int main(){
             }
         }
         copia_matriz(grid,newgrid,N);
-        if (i+1 == 2000)
+        if (i+1 == iteracoes)
             printf("\nGeracao %d: %d",i+1,somaMatriz(grid,N));
+        ftime(&fim_laco);
+        diff_laco_atual = (long) (1000.0 * (fim_laco.time-inicio_laco.time)+(fim_laco.millitm-inicio_laco.millitm));
         if (i == 0)
-            ftime(&fim_laco);
+            media_laco = diff_laco_atual;
+        media_laco = (media_laco + diff_laco_atual)/2;
     }
-
-    
-    time(&fim_prog);
-    diff = (int) (1000.0 * (fim_laco.time-inicio_laco.time)+(fim_laco.millitm-inicio_laco.millitm));
-    printf("\nTempo total: %.2lfs", difftime(fim_prog,inicio_prog));
-    printf("\nTempo de um laco: %ums",diff);
+    ftime(&fim_paralelo);  
+    ftime(&fim_prog);
+    diff_paralelo = (long) (1000.0 * (fim_paralelo.time-inicio_paralelo.time)+(fim_paralelo.millitm-inicio_paralelo.millitm));
+    diff_total = (long) (1000.0 * (fim_prog.time-inicio_prog.time)+(fim_prog.millitm-inicio_prog.millitm));
+    printf("\nTempo total: %ums", diff_total);
+    printf("\nMedia dos lacos: %ums",media_laco);
+    printf("\nTempo paralelo: %ums",diff_paralelo);
 
     free(grid);
     free(newgrid);
