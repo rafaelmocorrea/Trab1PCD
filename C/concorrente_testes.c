@@ -91,13 +91,12 @@ int main(){
     int N = 2048;           //NxN
     int iteracoes = 2000;    //Numero de iteracoes
     int cont_aux;           //Contador auxiliar
-    int tipo = NORMAL;        //Tipo do jogo
+    int tipo = HIGH;        //Tipo do jogo
     int i, j, k, l, m;         //Auxiliares dos lacos
-    int n_teste = 50;            //Numero de execuções
+    int n_teste = 5;            //Numero de execuções
     long diff_laco_atual, diff_paralelo, diff_total;    //Diferenca do tempo em ms
     long media_laco, media_medias_laco, media_paralelos, media_total;
     struct timeb fim_laco, inicio_laco, fim_prog, inicio_prog, fim_paralelo, inicio_paralelo;
-    
     for (m = 0; m < n_teste; m++){
         printf("Teste %d\n", m+1);
         media_laco = 0;
@@ -120,7 +119,7 @@ int main(){
         ftime(&inicio_paralelo);
         for (i = 0; i < iteracoes; i++){
             ftime(&inicio_laco);
-            #pragma omp parallel num_threads(1)
+            #pragma omp parallel num_threads(8)
                 {
                 #pragma omp for private(k,l,cont_aux) collapse(2)
                 for (k = 0; k < N; k++){
