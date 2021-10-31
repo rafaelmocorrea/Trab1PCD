@@ -1,3 +1,5 @@
+import java.sql.SQLOutput;
+
 public class Concorrente implements Runnable {
 
     private int[][] grid;
@@ -71,7 +73,7 @@ public class Concorrente implements Runnable {
             for (int j = 0; j < num_threads; j++){
                 if (j != num_threads - 1) {
                     threads[j] = new Concorrente(grid,newgrid,N,aux,(aux + (N/num_threads)),tipo);
-                    aux = (N/num_threads) + 1;
+                    aux += (N/num_threads) + 1;
                 } else {
                     threads[j] = new Concorrente(grid,newgrid,N,aux,N,tipo);
                 }

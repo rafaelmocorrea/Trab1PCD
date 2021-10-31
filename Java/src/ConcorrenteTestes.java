@@ -72,7 +72,7 @@ public class ConcorrenteTestes implements Runnable {
                 for (int j = 0; j < num_threads; j++) {
                     if (j != num_threads - 1) {
                         threads[j] = new ConcorrenteTestes(grid, newgrid, N, aux, (aux + (N / num_threads)), tipo);
-                        aux = (N / num_threads) + 1;
+                        aux += (N / num_threads) + 1;
                     } else {
                         threads[j] = new ConcorrenteTestes(grid, newgrid, N, aux, N, tipo);
                     }
