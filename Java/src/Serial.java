@@ -48,6 +48,10 @@ public class Serial {
                 }
             }
             Utilitarios.copiaMatriz(grid,newgrid,N);
+            if (i < 5) {
+                System.out.println("Geracao "+(i+1)+": "+Utilitarios.somaMatriz(grid,N));
+                Utilitarios.imprimeMatriz(grid,50);
+            }
             if (i+1 == 2000)
                 System.out.println("Geracao "+(i+1)+": "+Utilitarios.somaMatriz(grid,N));
 

@@ -51,8 +51,8 @@ public class ConcorrenteTestes implements Runnable {
         int N = 2048, iteracoes = 2000, aux;
         int[][] grid = new int[N][N];
         int[][] newgrid = new int[N][N];
-        int num_threads = 1;
-        int tipo = NORMAL;
+        int num_threads = 8;
+        int tipo = HIGH;
         long total_inicial, total_final, laco_inicial = 0, laco_final = 0, paralelo_inicial = 0, paralelo_final = 0, media_laco = 0;
         long media_medias_laco = 0, media_total = 0, media_paralelo = 0;
         int n_teste = 5;
